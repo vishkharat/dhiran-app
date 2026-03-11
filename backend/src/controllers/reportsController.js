@@ -18,7 +18,6 @@ export const downloadCustomerLedger = async (req, res) => {
       createdAt: 1,
     });
 
-    // ✅ FIX 1 (bufferPages added)
     const doc = new PDFDocument({ margin: 40, size: "A4", bufferPages: true });
 
     res.setHeader("Content-Type", "application/pdf");
@@ -29,8 +28,6 @@ export const downloadCustomerLedger = async (req, res) => {
 
     doc.pipe(res);
 
-    // ===== PATH SETUP =====
-
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
 
@@ -38,8 +35,6 @@ export const downloadCustomerLedger = async (req, res) => {
     const logoPath = path.join(__dirname, "../assets/logo.png");
 
     doc.font(fontPath);
-
-    // ===== HEADER WITH LOGO =====
 
     try {
       doc.image(logoPath, 40, 40, { width: 60 });
@@ -55,8 +50,6 @@ export const downloadCustomerLedger = async (req, res) => {
 
     doc.moveDown();
 
-    // ===== CUSTOMER DETAILS =====
-
     doc.fontSize(11);
 
     doc.text(`Customer Name: ${customer.name}`);
@@ -69,7 +62,12 @@ export const downloadCustomerLedger = async (req, res) => {
 
     for (const d of dhirans) {
 
-      doc.moveDown();
+      doc.moveDown(2);
+
+      // ✅ FIX 1: page break check so next dhiran doesn't shift
+      if (doc.y > 650) {
+        doc.addPage();
+      }
 
       doc.fontSize(13).text(`Dhiran ${dhiranNumber} (${d.status})`, { underline: true });
 
@@ -85,7 +83,8 @@ export const downloadCustomerLedger = async (req, res) => {
 
       doc.moveDown();
 
-      // ===== TABLE HEADER =====
+      // ✅ FIX 2: reset alignment before table start
+      doc.x = 40;
 
       let y = doc.y;
 
@@ -109,8 +108,6 @@ export const downloadCustomerLedger = async (req, res) => {
       y += 20;
 
       let balance = d.amount;
-
-      // ===== DHIRAN START =====
 
       doc.rect(tableLeft, y, 530, 20).stroke();
 
@@ -141,8 +138,6 @@ export const downloadCustomerLedger = async (req, res) => {
 
         balance -= principal;
 
-        // ===== PAYMENT ROW =====
-
         doc.rect(tableLeft, y, 530, 20).stroke();
 
         doc.text(new Date(p.paymentDate).toLocaleDateString(), colDate, y + 5);
@@ -152,8 +147,6 @@ export const downloadCustomerLedger = async (req, res) => {
         doc.text(`Rs. ${balance}`, colBalance, y + 5);
 
         y += 20;
-
-        // ===== GUJARATI NOTE =====
 
         doc.fontSize(9);
 
@@ -195,8 +188,6 @@ export const downloadCustomerLedger = async (req, res) => {
 
     }
 
-    // ===== PAGE NUMBER FOOTER =====
-
     const range = doc.bufferedPageRange();
 
     for (let i = range.start; i < range.start + range.count; i++) {
@@ -218,7 +209,6 @@ export const downloadCustomerLedger = async (req, res) => {
 
     console.log(error);
 
-    // ✅ FIX 2 (headers already sent error)
     if (!res.headersSent) {
       res.status(500).json({ message: error.message });
     }
