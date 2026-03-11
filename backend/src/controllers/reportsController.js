@@ -125,8 +125,15 @@ export const downloadCustomerLedger = async (req, res) => {
 
       let totalPrincipal = 0;
       let totalInterest = 0;
+      
 
       for (const p of payments) {
+
+  // FIX: page break check
+  if (y > 650) {
+    doc.addPage();
+    y = 60;
+  }
 
         const principal = p.principalPaid || 0;
         const interest = p.interestPaid || 0;
@@ -150,16 +157,16 @@ export const downloadCustomerLedger = async (req, res) => {
 
         doc.fontSize(9);
 
-        doc.text(`આ દિવસે તમે ₹${amount} ચુકવ્યા.`, colParticular, y);
+        doc.text(`આ દિવસે તમે ₹${amount} ચુકવ્યા.`, colParticular, y, { width: 350 });
         y += 12;
 
-        doc.text(`તેમાંથી ₹${interest} વ્યાજમાં કપાયા.`, colParticular, y);
+        doc.text(`તેમાંથી ₹${interest} વ્યાજમાં કપાયા.`, colParticular, y, { width: 350 });
         y += 12;
 
-        doc.text(`₹${principal} મૂડીમાં જમા થયા.`, colParticular, y);
+        doc.text(`₹${principal} મૂડીમાં જમા થયા.`, colParticular, y, { width: 350 });
         y += 12;
 
-        doc.text(`હજુ ચૂકવવાની મૂડી: ₹${balance}`, colParticular, y);
+        doc.text(`હજુ ચૂકવવાની મૂડી: ₹${balance}`, colParticular, y, { width: 350 });
 
         y += 15;
 
