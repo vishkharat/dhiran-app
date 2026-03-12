@@ -2,6 +2,7 @@ import express from "express";
 import Dhiran from "../models/Dhiran.js";
 import Payment from "../models/Payment.js";
 import { closeDhiran } from "../controllers/dhiranController.js";
+import { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ const calculateInterest = (amount, rate, fromDate, toDate) => {
 
 // ADD DHIRAN
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
 
   try {
 
@@ -66,7 +67,7 @@ router.post("/", async (req, res) => {
 
 // GET DHIRAN
 
-router.get("/:customerId", async (req, res) => {
+router.get("/:customerId", verifyToken, async (req, res) => {
 
   try {
 
@@ -115,6 +116,6 @@ router.get("/:customerId", async (req, res) => {
 
 // CLOSE DHIRAN
 
-router.put("/close/:id", closeDhiran);
+router.put("/close/:id", verifyToken, closeDhiran);
 
 export default router;

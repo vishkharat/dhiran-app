@@ -7,6 +7,7 @@ import paymentRoutes from "./src/routes/paymentRoutes.js";
 import ledgerRoutes from "./src/routes/ledgerRoutes.js";
 import dashboardRoutes from "./src/routes/dashboardRoutes.js";
 import reportsRoutes from "./src/routes/reportsRoutes.js";
+import authRoutes from "./src/routes/authRoutes.js";
 import cors from "cors";
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/ledger", ledgerRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/reports", reportsRoutes);
+app.use("/api/auth", authRoutes);
 
 // test route
 app.get("/", (req, res) => {

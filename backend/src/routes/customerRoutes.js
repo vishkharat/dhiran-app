@@ -6,24 +6,25 @@ import {
 } from "../controllers/customerController.js";
 
 import Customer from "../models/Customer.js";
+import { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 
 // ================= ADD CUSTOMER =================
-router.post("/", addCustomer);
+router.post("/", verifyToken, addCustomer);
 
 
 // ================= GET ALL CUSTOMERS =================
-router.get("/", getCustomers);
+router.get("/", verifyToken, getCustomers);
 
 
 // ================= SEARCH CUSTOMER =================
-router.get("/search", searchCustomers);
+router.get("/search", verifyToken, searchCustomers);
 
 
 // ================= GET SINGLE CUSTOMER =================
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyToken, async (req, res) => {
 
   try {
 

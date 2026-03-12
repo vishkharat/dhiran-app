@@ -6,12 +6,14 @@ import {
   getTotalPaid
 } from "../controllers/paymentController.js";
 
+import { verifyToken } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
-router.post("/", addPayment);
+router.post("/", verifyToken, addPayment);
 
-router.get("/dhiran/:id", getPaymentsByDhiran);
+router.get("/dhiran/:id", verifyToken, getPaymentsByDhiran);
 
-router.get("/total/:dhiranId", getTotalPaid);
+router.get("/total/:dhiranId", verifyToken, getTotalPaid);
 
 export default router;
