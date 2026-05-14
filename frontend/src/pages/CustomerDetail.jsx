@@ -198,33 +198,63 @@ const CustomerDetail = () => {
 
       <form onSubmit={addDhiran} style={formCard}>
 
-        <input style={input} placeholder="Dhiran Amount"
+        <input
+          style={input}
+          placeholder="Dhiran Amount"
           value={dhiranForm.amount}
-          onChange={(e) => setDhiranForm({ ...dhiranForm, amount: e.target.value })}
-          required />
+          onChange={(e) =>
+            setDhiranForm({ ...dhiranForm, amount: e.target.value })
+          }
+          required
+        />
 
-        <input style={input} placeholder="Purity (eg: 22K)"
+        <input
+          style={input}
+          placeholder="Purity (eg: 22K)"
           value={dhiranForm.purity}
-          onChange={(e) => setDhiranForm({ ...dhiranForm, purity: e.target.value })}
-          required />
+          onChange={(e) =>
+            setDhiranForm({ ...dhiranForm, purity: e.target.value })
+          }
+          required
+        />
 
-        <input style={input} placeholder="Weight (grams)"
+        <input
+          style={input}
+          placeholder="Weight (grams)"
           value={dhiranForm.weight}
-          onChange={(e) => setDhiranForm({ ...dhiranForm, weight: e.target.value })}
-          required />
+          onChange={(e) =>
+            setDhiranForm({ ...dhiranForm, weight: e.target.value })
+          }
+          required
+        />
 
-        <input style={input} placeholder="Interest %"
+        <input
+          style={input}
+          placeholder="Interest %"
           value={dhiranForm.interestRate}
-          onChange={(e) => setDhiranForm({ ...dhiranForm, interestRate: e.target.value })}
-          required />
+          onChange={(e) =>
+            setDhiranForm({ ...dhiranForm, interestRate: e.target.value })
+          }
+          required
+        />
 
-        <input style={input} placeholder="Description"
+        <input
+          style={input}
+          placeholder="Description"
           value={dhiranForm.description}
-          onChange={(e) => setDhiranForm({ ...dhiranForm, description: e.target.value })} />
+          onChange={(e) =>
+            setDhiranForm({ ...dhiranForm, description: e.target.value })
+          }
+        />
 
-        <input style={input} type="date"
+        <input
+          style={input}
+          type="date"
           value={dhiranForm.startDate}
-          onChange={(e) => setDhiranForm({ ...dhiranForm, startDate: e.target.value })} />
+          onChange={(e) =>
+            setDhiranForm({ ...dhiranForm, startDate: e.target.value })
+          }
+        />
 
         <button style={addBtn}>Add Dhiran</button>
 
@@ -255,16 +285,30 @@ const CustomerDetail = () => {
             <div style={infoGrid}>
 
               <p>Amount: ₹{d.amount}</p>
-              <p>Weight: {d.weight} grams</p>
-              <p>Stored Interest: ₹{storedInterest}</p>
-              <p>Live Interest: ₹{liveInterest}</p>
-              <p>Total Amount: ₹{total}</p>
-              <p>Paid: ₹{paid}</p>
-              <p><b>Remaining: ₹{remaining}</b></p>
-              <p>Purity: {d.purity}</p>
-              <p>Interest Rate: {d.interestRate}%</p>
-              <p>Description: {d.description}</p>
-              <p>Date: {new Date(d.startDate).toLocaleDateString()}</p>
+
+              <p>
+                Date: {new Date(d.startDate).toLocaleDateString()}
+              </p>
+
+              <p>
+                Description: {d.description || "-"}
+              </p>
+
+              <p>
+                Weight: {d.weight} grams
+              </p>
+
+              <p>
+                Live Interest: ₹{liveInterest}
+              </p>
+
+              <p>
+                Total Amount: ₹{total}
+              </p>
+
+              <p>
+                <b>Remaining Amount: ₹{remaining}</b>
+              </p>
 
             </div>
 
@@ -300,7 +344,7 @@ const CustomerDetail = () => {
 
         <div style={paymentCard}>
 
-          <h3 style={{marginBottom:"20px"}}>Add Payment</h3>
+          <h3 style={{ marginBottom: "20px" }}>Add Payment</h3>
 
           <form onSubmit={addPayment} style={paymentForm}>
 
@@ -319,7 +363,9 @@ const CustomerDetail = () => {
               onChange={(e) => setPaymentDate(e.target.value)}
             />
 
-            <p style={{width:"100%"}}>Interest will be auto calculated</p>
+            <p style={{ width: "100%" }}>
+              Interest will be auto calculated
+            </p>
 
             <div style={btnRow}>
 
